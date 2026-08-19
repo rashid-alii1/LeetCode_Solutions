@@ -4,7 +4,8 @@ public:
         unordered_map<char, int> freq;
         int left=0;
         int maxlen=0;
-        for(int right=0;right<s.size();right++)
+        int n=s.size();
+        for(int right=0;right<n;right++)
         {
             freq[s[right]]++;
             while(freq[s[right]]>1)
