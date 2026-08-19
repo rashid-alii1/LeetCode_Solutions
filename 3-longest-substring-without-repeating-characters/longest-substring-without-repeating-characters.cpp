@@ -7,16 +7,21 @@ public:
         int n=s.size();
         for(int right=0;right<n;right++)
         {
-            freq[s[right]]++;
-            while(freq[s[right]]>1)
+            // freq[s[right]]++;
+            // while(freq[s[right]]>1)
+            // {
+            //     freq[s[left]]--;
+            //     if(freq[s[left]]==0)
+            //     {
+            //         freq.erase(s[left]);
+            //     }
+            //     left++;
+            // }
+            if(freq.count(s[right]))
             {
-                freq[s[left]]--;
-                if(freq[s[left]]==0)
-                {
-                    freq.erase(s[left]);
-                }
-                left++;
+                left=max(left,freq[s[right]]+1);
             }
+            freq[s[right]]=right;
             maxlen=max(maxlen,right-left+1);
         }
         return maxlen;
