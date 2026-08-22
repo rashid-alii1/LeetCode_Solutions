@@ -12,7 +12,6 @@ public:
             product*=digit;
             n/=10;
         }
-        if(orignal%(sum+product)==0) return true;
-        else return false;
+        return (orignal%(sum+product)==0);
     }
 };
