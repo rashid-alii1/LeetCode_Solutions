@@ -8,7 +8,7 @@ public:
         }
         for(int multiple = k; ; multiple += k)
         {
-            if(present.count(multiple) == 0)
+            if(present.find(multiple) == present.end())
             {
                 return multiple;
             }
