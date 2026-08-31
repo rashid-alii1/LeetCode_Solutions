@@ -12,21 +12,41 @@ class Solution {
 public:
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
 
-        vector<int> critical;
-
         ListNode* prev = head;
         ListNode* curr = head->next;
 
         int position = 1;
 
+        int first = -1;
+        int last = -1;
+        int previous = -1;
+
+        int minDistance = INT_MAX;
+
         while (curr != nullptr && curr->next != nullptr) {
 
             ListNode* next = curr->next;
 
-            if ((curr->val > prev->val && curr->val > next->val) ||
-                (curr->val < prev->val && curr->val < next->val)) {
+            bool critical =
+                (curr->val > prev->val && curr->val > next->val) ||
+                (curr->val < prev->val && curr->val < next->val);
 
-                critical.push_back(position);
+            if (critical) {
+
+                if (first == -1) {
+                    // First critical point
+                    first = position;
+                }
+                else {
+                    // Distance from previous critical point
+                    minDistance = min(
+                        minDistance,
+                        position - previous
+                    );
+                }
+
+                previous = position;
+                last = position;
             }
 
             prev = curr;
@@ -34,17 +54,10 @@ public:
             position++;
         }
 
-        if (critical.size() < 2)
+        if (first == -1 || first == last)
             return {-1, -1};
 
-        int minDistance = INT_MAX;
-
-        for (int i = 1; i < critical.size(); i++) {
-            minDistance = min(minDistance,
-                              critical[i] - critical[i - 1]);
-        }
-
-        int maxDistance = critical.back() - critical.front();
+        int maxDistance = last - first;
 
         return {minDistance, maxDistance};
     }
